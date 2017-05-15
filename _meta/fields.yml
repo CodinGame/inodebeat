@@ -2,8 +2,33 @@
   title: inodebeat
   description:
   fields:
-    - name: counter
+    - name: total
       type: long
-      required: true
       description: >
-        PLEASE UPDATE DOCUMENTATION
+        Total number of inodes
+    - name: used
+      type: group
+      fields:
+        - name: total
+          type: long
+          description: >
+            Number of used inodes
+        - name: pct
+          #type: scaled_float
+          type: float
+          format: percent
+          description: >
+            Percentage of used inodes
+    - name: free
+      type: group
+      fields:
+        - name: total
+          type: long
+          description: >
+            Number of free inodes
+        - name: pct
+          # type: scaled_float
+          type: float
+          format: percent
+          description: >
+            Percentage of free inodes
