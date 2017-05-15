@@ -45,11 +45,18 @@
             }
           }
         },
-        "counter": {
-          "type": "long"
-        },
         "fields": {
           "properties": {}
+        },
+        "free": {
+          "properties": {
+            "pct": {
+              "type": "float"
+            },
+            "total": {
+              "type": "long"
+            }
+          }
         },
         "meta": {
           "properties": {
@@ -93,6 +100,19 @@
           "ignore_above": 1024,
           "index": "not_analyzed",
           "type": "string"
+        },
+        "total": {
+          "type": "long"
+        },
+        "used": {
+          "properties": {
+            "pct": {
+              "type": "float"
+            },
+            "total": {
+              "type": "long"
+            }
+          }
         }
       }
     }

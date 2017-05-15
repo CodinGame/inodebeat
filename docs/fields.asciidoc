@@ -128,12 +128,48 @@ None
 
 
 [float]
-=== counter
+=== total
 
 type: long
 
-required: True
+Total number of inodes
 
-PLEASE UPDATE DOCUMENTATION
+
+
+[float]
+=== used.total
+
+type: long
+
+Number of used inodes
+
+
+[float]
+=== used.pct
+
+type: float
+
+format: percent
+
+Percentage of used inodes
+
+
+
+[float]
+=== free.total
+
+type: long
+
+Number of free inodes
+
+
+[float]
+=== free.pct
+
+type: float
+
+format: percent
+
+Percentage of free inodes
 
 
