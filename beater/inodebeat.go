@@ -2,6 +2,7 @@ package beater
 
 import (
 	"fmt"
+	"syscall"
 	"time"
 
 	"github.com/elastic/beats/libbeat/beat"
@@ -45,10 +46,13 @@ func (bt *Inodebeat) Run(b *beat.Beat) error {
 		case <-ticker.C:
 		}
 
+		inodes := getInodes()
+
 		event := common.MapStr{
 			"@timestamp": common.Time(time.Now()),
 			"type":       b.Name,
 			"counter":    counter,
+			"inodes":     inodes,
 		}
 		bt.client.PublishEvent(event)
 		logp.Info("Event sent")
@@ -59,4 +63,34 @@ func (bt *Inodebeat) Run(b *beat.Beat) error {
 func (bt *Inodebeat) Stop() {
 	bt.client.Close()
 	close(bt.done)
+}
+
+func getInodes() common.MapStr {
+	var stat syscall.Statfs_t
+
+	err := syscall.Statfs("/", &stat)
+
+	if err != nil {
+		logp.Err(err.Error())
+	}
+
+	inodesTotal := stat.Files
+	inodesFree := stat.Ffree
+	inodesUsed := inodesTotal - inodesFree
+	inodesFreePercent := 100.0 * float64(inodesFree) / float64(inodesTotal)
+	inodesUsedPercent := 100.0 * float64(inodesUsed) / float64(inodesTotal)
+
+	inodes := common.MapStr{
+		"total": inodesTotal,
+		"free": common.MapStr{
+			"total": inodesFree,
+			"pct":   inodesFreePercent,
+		},
+		"used": common.MapStr{
+			"total": inodesUsed,
+			"pct":   inodesUsedPercent,
+		},
+	}
+
+	return inodes
 }
