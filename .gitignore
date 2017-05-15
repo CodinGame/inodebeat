@@ -5,3 +5,5 @@
 /inodebeat
 /inodebeat.test
 *.pyc
+
+vendor
