@@ -1,0 +1,9 @@
+package: github.com/codingame/inodebeat
+import:
+- package: github.com/elastic/beats
+  version: v5.4.0
+  subpackages:
+  - libbeat/beat
+  - libbeat/common
+  - libbeat/logp
+  - libbeat/publisher
