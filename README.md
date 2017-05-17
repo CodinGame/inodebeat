@@ -1,119 +1,60 @@
 # Inodebeat
 
-Welcome to Inodebeat.
+Beat to monitor inodes on a machine.
 
-Ensure that this folder is at the following location:
-`${GOPATH}/github.com/codingame/inodebeat`
 
-## Getting Started with Inodebeat
+## How to run
 
-### Requirements
-
-* [Golang](https://golang.org/dl/) 1.7
-
-### Init Project
-To get running with Inodebeat and also install the
-dependencies, run the following command:
+The easiest way to launch inodebeat is to run it in a Docker container:
 
 ```
-make setup
-```
-
-It will create a clean git history for each major step. Note that you can always rewrite the history if you wish before pushing your changes.
-
-To push Inodebeat in the git repository, run the following commands:
-
-```
-git remote set-url origin https://github.com/codingame/inodebeat
-git push origin master
-```
-
-For further development, check out the [beat developer guide](https://www.elastic.co/guide/en/beats/libbeat/current/new-beat.html).
-
-### Build
-
-To build the binary for Inodebeat run the command below. This will generate a binary
-in the same directory with the name inodebeat.
-
-```
-make
+docker run codingame/inodebeat
 ```
 
 
-### Run
+## Configuring inodebeat
 
-To run Inodebeat with debugging output enabled, run:
-
-```
-./inodebeat -c inodebeat.yml -e -d "*"
-```
-
-
-### Test
-
-To test Inodebeat, run the following command:
+To override the default configuration, just link yours to `/etc/inodebeat/inodebeat.yml`:
 
 ```
-make testsuite
+docker run -d \
+  -v /directory/where/your/config/file/is/:/etc/inodebeat \
+  --name inodebeat \
+  codingame/inodebeat
 ```
 
-alternatively:
-```
-make unit-tests
-make system-tests
-make integration-tests
-make coverage-report
-```
+Otherwise, you could create your own image with your custom configuration with a Dockerfile like:
 
-The test coverage is reported in the folder `./build/coverage/`
+```Dockerfile
+FROM codingame/inodebeat
 
-### Update
-
-Each beat has a template for the mapping in elasticsearch and a documentation for the fields
-which is automatically generated based on `_meta/fields.yml`.
-To generate etc/inodebeat.template.json and etc/inodebeat.asciidoc
-
-```
-make update
+COPY inodebeat.yml /etc/inodebeat/inodebeat.yml
 ```
 
 
-### Cleanup
+## Exported fields
 
-To clean  Inodebeat source code, run the following commands:
+Example output:
 
-```
-make fmt
-make simplify
-```
-
-To clean up the build directory and generated artifacts, run:
-
-```
-make clean
-```
-
-
-### Clone
-
-To clone Inodebeat from the git repository, run the following commands:
-
-```
-mkdir -p ${GOPATH}/github.com/codingame/inodebeat
-cd ${GOPATH}/github.com/codingame/inodebeat
-git clone https://github.com/codingame/inodebeat
+```json
+{
+  "inodes": {
+    "total": 13582336,
+    "free": {
+      "pct": 81.895677,
+      "count": 11123346
+    },
+    "used": {
+      "pct": 18.104323,
+      "count": 2458990
+    }
+  }
+}
 ```
 
+To get a detailed list of all generated fields, please read the [fields documentation page](docs/fields.asciidoc).
 
-For further development, check out the [beat developer guide](https://www.elastic.co/guide/en/beats/libbeat/current/new-beat.html).
 
+## Contributing to the project
 
-## Packaging
-
-The beat frameworks provides tools to crosscompile and package your beat for different platforms. This requires [docker](https://www.docker.com/) and vendoring as described above. To build packages of your beat, run the following command:
-
-```
-make package
-```
-
-This will fetch and create all images required for the build process. The hole process to finish can take several minutes.
+See [contributing instructions](CONTRIBUTING.md) to set up the project and build it on your machine.

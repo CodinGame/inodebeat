@@ -1,6 +1,6 @@
 - key: inodebeat
   title: inodebeat
-  description:
+  description: Contains inodes information, as if you ran a `df -i /` command
   fields:
     - name: total
       type: long
