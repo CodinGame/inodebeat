@@ -137,7 +137,7 @@ Total number of inodes
 
 
 [float]
-=== used.total
+=== used.count
 
 type: long
 
@@ -156,7 +156,7 @@ Percentage of used inodes
 
 
 [float]
-=== free.total
+=== free.count
 
 type: long
 
