@@ -70,7 +70,7 @@ The test coverage is reported in the folder `./build/coverage/`
 ### Update
 
 Each beat has a template for the mapping in elasticsearch and a documentation for the fields
-which is automatically generated based on `etc/fields.yml`.
+which is automatically generated based on `_meta/fields.yml`.
 To generate etc/inodebeat.template.json and etc/inodebeat.asciidoc
 
 ```
