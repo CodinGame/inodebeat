@@ -83,11 +83,11 @@ func getInodes() common.MapStr {
 	inodes := common.MapStr{
 		"total": inodesTotal,
 		"free": common.MapStr{
-			"total": inodesFree,
+			"count": inodesFree,
 			"pct":   inodesFreePercent,
 		},
 		"used": common.MapStr{
-			"total": inodesUsed,
+			"count": inodesUsed,
 			"pct":   inodesUsedPercent,
 		},
 	}

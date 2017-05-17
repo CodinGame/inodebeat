@@ -9,7 +9,7 @@
     - name: used
       type: group
       fields:
-        - name: total
+        - name: count
           type: long
           description: >
             Number of used inodes
@@ -22,7 +22,7 @@
     - name: free
       type: group
       fields:
-        - name: total
+        - name: count
           type: long
           description: >
             Number of free inodes
