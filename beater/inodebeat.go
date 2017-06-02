@@ -38,7 +38,6 @@ func (bt *Inodebeat) Run(b *beat.Beat) error {
 
 	bt.client = b.Publisher.Connect()
 	ticker := time.NewTicker(bt.config.Period)
-	counter := 1
 	for {
 		select {
 		case <-bt.done:
@@ -51,12 +50,10 @@ func (bt *Inodebeat) Run(b *beat.Beat) error {
 		event := common.MapStr{
 			"@timestamp": common.Time(time.Now()),
 			"type":       b.Name,
-			"counter":    counter,
 			"inodes":     inodes,
 		}
 		bt.client.PublishEvent(event)
 		logp.Info("Event sent")
-		counter++
 	}
 }
 
