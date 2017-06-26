@@ -39,6 +39,10 @@
             }
           }
         },
+        "directory": {
+          "norms": false,
+          "type": "text"
+        },
         "fields": {
           "properties": {}
         },

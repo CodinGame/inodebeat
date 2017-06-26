@@ -45,6 +45,13 @@
             }
           }
         },
+        "directory": {
+          "index": "analyzed",
+          "norms": {
+            "enabled": false
+          },
+          "type": "string"
+        },
         "fields": {
           "properties": {}
         },

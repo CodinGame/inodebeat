@@ -128,6 +128,14 @@ Contains inodes information, as if you ran a `df -i /` command
 
 
 [float]
+=== directory
+
+type: text
+
+The mountpoint on which we count inodes
+
+
+[float]
 === total
 
 type: long
