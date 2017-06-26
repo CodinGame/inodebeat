@@ -45,15 +45,17 @@ func (bt *Inodebeat) Run(b *beat.Beat) error {
 		case <-ticker.C:
 		}
 
-		inodes := getInodes()
+		for _, directory := range bt.config.Directories {
+			inodes := getInodes(directory)
 
-		event := common.MapStr{
-			"@timestamp": common.Time(time.Now()),
-			"type":       b.Name,
-			"inodes":     inodes,
+			event := common.MapStr{
+				"@timestamp": common.Time(time.Now()),
+				"type":       b.Name,
+				"inodes":     inodes,
+			}
+			bt.client.PublishEvent(event)
+			logp.Info("Event sent")
 		}
-		bt.client.PublishEvent(event)
-		logp.Info("Event sent")
 	}
 }
 
@@ -62,13 +64,18 @@ func (bt *Inodebeat) Stop() {
 	close(bt.done)
 }
 
-func getInodes() common.MapStr {
+func getInodes(directory string) common.MapStr {
 	var stat syscall.Statfs_t
 
-	err := syscall.Statfs("/", &stat)
+	err := syscall.Statfs(directory, &stat)
 
 	if err != nil {
-		logp.Err(err.Error())
+		errorMessage := err.Error()
+		logp.Err(errorMessage)
+		return common.MapStr{
+			"directory": directory,
+			"error":     errorMessage,
+		}
 	}
 
 	inodesTotal := stat.Files
@@ -78,7 +85,8 @@ func getInodes() common.MapStr {
 	inodesUsedPercent := 100.0 * float64(inodesUsed) / float64(inodesTotal)
 
 	inodes := common.MapStr{
-		"total": inodesTotal,
+		"directory": directory,
+		"total":     inodesTotal,
 		"free": common.MapStr{
 			"count": inodesFree,
 			"pct":   inodesFreePercent,

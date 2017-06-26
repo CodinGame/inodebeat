@@ -2,6 +2,10 @@
   title: inodebeat
   description: Contains inodes information, as if you ran a `df -i /` command
   fields:
+    - name: directory
+      type: text
+      description: >
+        The mountpoint on which we count inodes
     - name: total
       type: long
       description: >
