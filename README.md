@@ -19,6 +19,7 @@ To override the default configuration, just link yours to `/etc/inodebeat/inodeb
 ```
 docker run -d \
   -v /directory/where/your/config/file/is/:/etc/inodebeat \
+  -v /:/hostfs:ro \
   --name inodebeat \
   codingame/inodebeat
 ```
@@ -39,6 +40,7 @@ Example output:
 ```json
 {
   "inodes": {
+    "directory": "/hostfs",
     "total": 13582336,
     "free": {
       "pct": 81.895677,
