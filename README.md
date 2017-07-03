@@ -21,7 +21,7 @@ docker run -d \
   -v /directory/where/your/config/file/is/:/etc/inodebeat \
   -v /:/hostfs:ro \
   --name inodebeat \
-  codingame/inodebeat
+  codingame/inodebeat inodebeat -e -c /etc/inodebeat/inodebeat.yml
 ```
 
 Otherwise, you could create your own image with your custom configuration with a Dockerfile like:
@@ -30,6 +30,8 @@ Otherwise, you could create your own image with your custom configuration with a
 FROM codingame/inodebeat
 
 COPY inodebeat.yml /etc/inodebeat/inodebeat.yml
+
+CMD [ "inodebeat", "-c", "/etc/inodebeat/inodebeat.yml", "-e" ]
 ```
 
 

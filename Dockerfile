@@ -46,6 +46,4 @@ ENV PATH $INODEBEAT_HOME:$PATH
 
 COPY --from=build-environment $INODEBEAT_HOME $INODEBEAT_HOME
 
-ENTRYPOINT [ "inodebeat" ]
-
-CMD [ "-c", "$INODEBEAT_HOME/inodebeat.yml", "-e" ]
+CMD [ "inodebeat", "-c", "$INODEBEAT_HOME/inodebeat.yml", "-e" ]
